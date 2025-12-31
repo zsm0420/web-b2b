@@ -2,15 +2,11 @@ from myapp.views.admin.thing import *
 from myapp.views.admin.category import *
 from myapp.views.admin.user import *
 from myapp.views.admin.news import *
-from myapp.views.admin.case import *
 from myapp.views.admin.about import *
-from myapp.views.admin.faq import *
 from myapp.views.admin.comment import *
 from myapp.views.admin.advantage import *
 from myapp.views.admin.inquiry import *
-from myapp.views.admin.download import *
 from myapp.views.admin.basicSite import *
-from myapp.views.admin.basicTdk import *
 from myapp.views.admin.basicBanner import *
 from myapp.views.admin.basicGlobal import *
 from myapp.views.admin.basicAdditional import *

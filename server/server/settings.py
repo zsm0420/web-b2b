@@ -120,7 +120,7 @@ if os.environ.get('RENDER') != 'true':
         }
     }
 else:
-    # 生产环境使用PlanetScale（Render平台）
+    # 生产环境使用 PostgreSQL (Neon 或 Supabase)
     DATABASES = {
         'default': dj_database_url.config(
             default=os.environ.get('DATABASE_URL'),

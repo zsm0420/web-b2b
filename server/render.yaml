@@ -4,7 +4,7 @@ services:
     name: django-backend
     runtime: python
     plan: free
-    buildCommand: pip install -r requirements.txt
+    buildCommand: pip install -r requirements.txt && python manage.py migrate
     startCommand: gunicorn server.wsgi:application --bind 0.0.0.0:$PORT
     envVars:
       - key: PYTHON_VERSION
@@ -13,15 +13,6 @@ services:
         value: "true"
       - key: DJANGO_SETTINGS_MODULE
         value: server.settings
-      - key: DATABASE_URL
-        fromDatabase:
-          name: planetscale-db
-          property: connectionString
+      # DATABASE_URL 需要在 Render 控制台手动添加（从 Neon 或 Supabase 获取）
     autoDeploy: true
 
-# PlanetScale 数据库
-databases:
-  - name: planetscale-db
-    databaseName: web_b2b
-    user: web_b2b_user
-    plan: free
