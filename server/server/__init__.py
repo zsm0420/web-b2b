@@ -1,4 +1,5 @@
-import pymysql
-pymysql.install_as_MySQLdb()
+# PyMySQL 已移除，改用 PostgreSQL
+# import pymysql
+# pymysql.install_as_MySQLdb()
 
-print("===============install pymysql==============")
+print("===============using psycopg2==============")
