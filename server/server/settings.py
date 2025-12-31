@@ -103,7 +103,7 @@ WSGI_APPLICATION = 'server.wsgi.application'
 import dj_database_url
 
 # 开发环境使用本地MySQL
-if os.environ.get('RENDER') != 'true':
+if os.environ.get('DATABASE_URL') is None:
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.mysql',
