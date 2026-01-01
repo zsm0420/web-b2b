@@ -37,9 +37,13 @@ export async function generateMetadata({params}) {
     // 使用缓存的函数获取案例详情数据
     const data = await getSectionDataCached();
 
+    // 提供默认值防止 null 错误
+    const safeData = data || {};
+    const seoData = safeData.seoData || {};
+
     // 从详情数据中提取信息
-    const {seo_title, seo_description, seo_keywords} = data.seoData;
-    const siteName = data.siteName;
+    const {seo_title, seo_description, seo_keywords} = seoData;
+    const siteName = safeData.siteName;
 
     // 返回动态生成的metadata
     return {
@@ -51,7 +55,7 @@ export async function generateMetadata({params}) {
             title: seo_title || siteName || 'Home',
             description: seo_description || siteName || 'Home',
             url: process.env.NEXT_PUBLIC_BASE_URL,
-            siteName: siteName,
+            siteName: siteName || '',
             image: '',
             type: 'website',
         },
