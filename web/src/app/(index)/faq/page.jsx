@@ -5,20 +5,23 @@ import {getIp} from "@/utils/tools";
 export default async function Page() {
     const sectionData = await getSectionDataCached();
 
+    // 如果获取数据失败，使用默认空数据
+    const templateProps = {
+        bannerData: sectionData?.bannerData || null,
+        faqData: sectionData?.faqData || null
+    };
+
     // 获取模板id
     const templateId = process.env.NEXT_PUBLIC_TEMPLATE_ID;
 
-    // 准备传递给模板的props
-    const templateProps = {
-        bannerData: sectionData.bannerData,
-        faqData: sectionData.faqData
-    };
-
-    // 动态导入对应模板
-    const FaqTemplateModule = await import(`@/templates/${templateId}/faqTemplate`);
-    const FaqTemplate = FaqTemplateModule.default;
-    
-    return <FaqTemplate {...templateProps} />;
+    try {
+        // 动态导入对应模板
+        const FaqTemplateModule = await import(`@/templates/${templateId}/faqTemplate`);
+        const FaqTemplate = FaqTemplateModule.default;
+        return <FaqTemplate {...templateProps} />;
+    } catch (error) {
+        return <div>FAQ 页面加载失败</div>;
+    }
 }
 
 export async function generateMetadata({ params }) {

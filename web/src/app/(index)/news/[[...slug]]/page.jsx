@@ -17,24 +17,27 @@ export default async function Page({params}) {
     const urlParams = {page: pageNumber, pageSize: pageSize};
     const sectionData = await getSectionDataCached(urlParams);
 
+    // 如果获取数据失败，使用默认空数据
+    const templateProps = {
+        bannerData: sectionData?.bannerData || null,
+        pageNumber: pageNumber,
+        pageSize: pageSize,
+        total: sectionData?.total || 0,
+        newsData: sectionData?.newsData || [],
+        featuredData: sectionData?.featuredData || []
+    };
+
     // 获取模板id
     const templateId = process.env.NEXT_PUBLIC_TEMPLATE_ID;
 
-    // 准备传递给模板的props
-    const templateProps = {
-        bannerData: sectionData.bannerData,
-        pageNumber: pageNumber,
-        pageSize: pageSize,
-        total: sectionData.total,
-        newsData: sectionData.newsData,
-        featuredData: sectionData.featuredData
-    };
-
-    // 动态导入对应模板
-    const NewsTemplateModule = await import(`@/templates/${templateId}/newsTemplate`);
-    const NewsTemplate = NewsTemplateModule.default;
-    
-    return <NewsTemplate {...templateProps} />;
+    try {
+        // 动态导入对应模板
+        const NewsTemplateModule = await import(`@/templates/${templateId}/newsTemplate`);
+        const NewsTemplate = NewsTemplateModule.default;
+        return <NewsTemplate {...templateProps} />;
+    } catch (error) {
+        return <div>新闻页面加载失败</div>;
+    }
 }
 
 export async function generateMetadata({params}) {

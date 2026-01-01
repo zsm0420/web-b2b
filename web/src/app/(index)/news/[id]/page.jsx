@@ -72,40 +72,44 @@ export default async function Page({params}) {
     // 获取模板id
     const templateId = process.env.NEXT_PUBLIC_TEMPLATE_ID;
 
-    if (!data) {
-        // 动态导入对应模板并传入空数据
+    try {
+        if (!data) {
+            // 动态导入对应模板并传入空数据
+            const NewsDetailTemplateModule = await import(`@/templates/${templateId}/newsDetailTemplate`);
+            const NewsDetailTemplate = NewsDetailTemplateModule.default;
+            return <NewsDetailTemplate detailData={null} />;
+        }
+
+        const {detailData, categoryData, recommendData} = data;
+
+        // 分享链接构建
+        const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
+        const articleUrl = `${baseUrl}/news/${id}`;
+        const encodedUrl = encodeURIComponent(articleUrl);
+        const encodedTitle = encodeURIComponent(detailData.title);
+        const encodedSummary = encodeURIComponent(`Check out this article: ${detailData.title}`);
+
+        // 社交媒体分享链接
+        const shareLinks = {
+            facebook: `https://www.facebook.com/sharer/sharer.php?u=${encodedUrl}`,
+            twitter: `https://twitter.com/intent/tweet?url=${encodedUrl}&text=${encodedTitle}`,
+            linkedin: `https://www.linkedin.com/sharing/share-offsite/?url=${encodedUrl}`
+        };
+
+        // 准备传递给模板的props
+        const templateProps = {
+            detailData,
+            categoryData,
+            recommendData,
+            shareLinks
+        };
+
+        // 动态导入对应模板
         const NewsDetailTemplateModule = await import(`@/templates/${templateId}/newsDetailTemplate`);
         const NewsDetailTemplate = NewsDetailTemplateModule.default;
-        return <NewsDetailTemplate detailData={null} />;
+
+        return <NewsDetailTemplate {...templateProps} />;
+    } catch (error) {
+        return <div>新闻详情页面加载失败</div>;
     }
-
-    const {detailData, categoryData, recommendData} = data;
-
-    // 分享链接构建
-    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
-    const articleUrl = `${baseUrl}/news/${id}`;
-    const encodedUrl = encodeURIComponent(articleUrl);
-    const encodedTitle = encodeURIComponent(detailData.title);
-    const encodedSummary = encodeURIComponent(`Check out this article: ${detailData.title}`);
-
-    // 社交媒体分享链接
-    const shareLinks = {
-        facebook: `https://www.facebook.com/sharer/sharer.php?u=${encodedUrl}`,
-        twitter: `https://twitter.com/intent/tweet?url=${encodedUrl}&text=${encodedTitle}`,
-        linkedin: `https://www.linkedin.com/sharing/share-offsite/?url=${encodedUrl}`
-    };
-
-    // 准备传递给模板的props
-    const templateProps = {
-        detailData,
-        categoryData,
-        recommendData,
-        shareLinks
-    };
-
-    // 动态导入对应模板
-    const NewsDetailTemplateModule = await import(`@/templates/${templateId}/newsDetailTemplate`);
-    const NewsDetailTemplate = NewsDetailTemplateModule.default;
-    
-    return <NewsDetailTemplate {...templateProps} />;
 }
