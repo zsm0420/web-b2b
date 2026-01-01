@@ -4,6 +4,11 @@ import {getIp} from "@/utils/tools";
 
 
 export default async function Page() {
+    const sectionData = await getSectionDataCached();
+
+    // 提供默认值以防止 null 错误
+    const safeSectionData = sectionData || {};
+
     const {
         bannerData,
         aboutData,
@@ -13,7 +18,7 @@ export default async function Page() {
         companyImageData,
         certificationImageData,
         contactData
-    } = await getSectionDataCached();
+    } = safeSectionData;
 
     // 获取模板id
     const templateId = process.env.NEXT_PUBLIC_TEMPLATE_ID

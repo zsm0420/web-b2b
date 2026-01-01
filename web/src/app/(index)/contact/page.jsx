@@ -3,7 +3,12 @@ import {cache} from "react";
 import {getIp} from "@/utils/tools";
 
 export default async function Page() {
-    const {bannerData, contactData, recommendData} = await getSectionDataCached();
+    const sectionData = await getSectionDataCached();
+
+    // 提供默认值以防止 null 错误
+    const safeSectionData = sectionData || {};
+
+    const {bannerData, contactData, recommendData} = safeSectionData;
 
     // 获取模板id
     const templateId = process.env.NEXT_PUBLIC_TEMPLATE_ID;

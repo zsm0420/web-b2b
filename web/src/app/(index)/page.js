@@ -6,27 +6,30 @@ import {getIp} from "@/utils/tools";
 export default async function Home() {
     const sectionData = await getSectionDataCached();
 
+    // 提供默认值以防止 null 错误
+    const safeSectionData = sectionData || {};
+
     // 获取模板id
     const templateId = process.env.NEXT_PUBLIC_TEMPLATE_ID || '001';
 
     // 准备传递给模板的props
     const templateProps = {
-        bannerData: sectionData.bannerData,
-        featuredData: sectionData.featuredData,
-        categoryData: sectionData.categoryData,
-        aboutData: sectionData.aboutData,
-        companyName: sectionData.companyName,
-        statsData: sectionData.statsData,
-        commentData: sectionData.commentData,
-        newsData: sectionData.newsData,
-        heroText: sectionData.heroText,
-        contactData: sectionData.contactData
+        bannerData: safeSectionData.bannerData,
+        featuredData: safeSectionData.featuredData,
+        categoryData: safeSectionData.categoryData,
+        aboutData: safeSectionData.aboutData,
+        companyName: safeSectionData.companyName,
+        statsData: safeSectionData.statsData,
+        commentData: safeSectionData.commentData,
+        newsData: safeSectionData.newsData,
+        heroText: safeSectionData.heroText,
+        contactData: safeSectionData.contactData
     };
 
     // 动态导入对应模板
     const HomeTemplateModule = await import(`@/templates/${templateId}/homeTemplate`);
     const HomeTemplate = HomeTemplateModule.default;
-    
+
     return <HomeTemplate {...templateProps} />;
 }
 
