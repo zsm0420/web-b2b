@@ -16,34 +16,42 @@ export default function AboutTemplate({
                                           certificationImageData,
                                           contactData
                                       }) {
+    // 提供默认值以避免空指针错误
+    const safeAboutData = aboutData || {};
+    const safeMissionData = missionData || {};
+    const safeStatsData = statsData || {};
+    const safeAdvantageData = advantageData || [];
+    const safeCompanyImageData = companyImageData || [];
+    const safeCertificationImageData = certificationImageData || [];
+    const safeContactData = contactData || {};
     return (
         <div className="flex flex-col">
 
-            <Banner title="About Us" titleLink="/about" bannerData={bannerData}/>
+            <Banner title="About Us" titleLink="/about" bannerData={bannerData || {}}/>
 
             <div>
                 {/* Who We Are 区域 */}
-                <WhoWeAre aboutData={aboutData}/>
+                <WhoWeAre aboutData={safeAboutData}/>
 
                 {/*Our mission section */}
-                <OurMission missionData={missionData} statsData={statsData}/>
+                <OurMission missionData={safeMissionData} statsData={safeStatsData}/>
 
                 {/* Our Advantages 区域 */}
-                {advantageData?.length > 0 && (
-                    <Advantages advantageData={advantageData}/>
+                {safeAdvantageData?.length > 0 && (
+                    <Advantages advantageData={safeAdvantageData}/>
                 )}
 
                 {/* Our Factory 区域 */}
-                {companyImageData?.length > 0 && (
-                    <OurFactory companyImageData={companyImageData}/>
+                {safeCompanyImageData?.length > 0 && (
+                    <OurFactory companyImageData={safeCompanyImageData}/>
                 )}
 
                 {/* certification 区域 */}
-                {certificationImageData?.length > 0 && (
-                    <Certification certificationImageData={certificationImageData}/>
+                {safeCertificationImageData?.length > 0 && (
+                    <Certification certificationImageData={safeCertificationImageData}/>
                 )}
 
-                <ContactUs contactData={contactData}/>
+                <ContactUs contactData={safeContactData}/>
             </div>
         </div>
     );
