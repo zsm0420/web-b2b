@@ -1,7 +1,7 @@
 /** @type {import('next').NextConfig} */
 
 const nextConfig = {
-    output: 'export', // 导出静态文件，用于Cloudflare Pages部署
+    // output: 'export', // 移除静态导出，Vercel 支持 SSR
     basePath: '', // 设置统一前缀如/en
     assetPrefix: '', // 静态资源前缀
     reactStrictMode: false,
