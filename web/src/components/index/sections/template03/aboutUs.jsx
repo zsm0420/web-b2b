@@ -18,13 +18,15 @@ export default function AboutUs({aboutData, companyName, statsData}) {
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
                     {/* 左侧图片 */}
                     <div className="relative h-[300px] lg:h-full overflow-hidden">
-                        <Image
-                            src={`${process.env.NEXT_PUBLIC_BASE_URL}/upload/img/${aboutData.aboutCover}`}
-                            alt={companyName}
-                            fill
-                            className="object-cover"
-                            sizes="(max-width: 768px) 100vw, 50vw"
-                        />
+                        {aboutData?.aboutCover && (
+                            <Image
+                                src={`${process.env.NEXT_PUBLIC_BASE_URL}/upload/img/${aboutData.aboutCover}`}
+                                alt={companyName || ''}
+                                fill
+                                className="object-cover"
+                                sizes="(max-width: 768px) 100vw, 50vw"
+                            />
+                        )}
                     </div>
 
                     {/* 右侧内容 */}
@@ -33,7 +35,7 @@ export default function AboutUs({aboutData, companyName, statsData}) {
                             {companyName}
                         </h3>
                         <p className="mb-6 text-gray-700"
-                           dangerouslySetInnerHTML={{__html: aboutData.aboutText}}>
+                           dangerouslySetInnerHTML={{__html: aboutData?.aboutText || ''}}>
                         </p>
 
                         <Link href="/about"
@@ -49,21 +51,21 @@ export default function AboutUs({aboutData, companyName, statsData}) {
                 {/* 统计数据 */}
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mt-16 text-center">
                     <div className="p-6 bg-mainColorLight">
-                        <div className="text-4xl font-bold text-mainColorNormal mb-2">{statsData.param_one_value}</div>
-                        <div className="text-gray-700">{statsData.param_one_name}</div>
+                        <div className="text-4xl font-bold text-mainColorNormal mb-2">{statsData?.param_one_value || ''}</div>
+                        <div className="text-gray-700">{statsData?.param_one_name || ''}</div>
                     </div>
                     <div className="p-6 bg-mainColorLight">
-                        <div className="text-4xl font-bold text-mainColorNormal mb-2">{statsData.param_two_value}</div>
-                        <div className="text-gray-700">{statsData.param_two_name}</div>
+                        <div className="text-4xl font-bold text-mainColorNormal mb-2">{statsData?.param_two_value || ''}</div>
+                        <div className="text-gray-700">{statsData?.param_two_name || ''}</div>
                     </div>
                     <div className="p-6 bg-mainColorLight">
                         <div
-                            className="text-4xl font-bold text-mainColorNormal mb-2">{statsData.param_three_value}</div>
-                        <div className="text-gray-700">{statsData.param_three_name}</div>
+                            className="text-4xl font-bold text-mainColorNormal mb-2">{statsData?.param_three_value || ''}</div>
+                        <div className="text-gray-700">{statsData?.param_three_name || ''}</div>
                     </div>
                     <div className="p-6 bg-mainColorLight">
-                        <div className="text-4xl font-bold text-mainColorNormal mb-2">{statsData.param_four_value}</div>
-                        <div className="text-gray-700">{statsData.param_four_name}</div>
+                        <div className="text-4xl font-bold text-mainColorNormal mb-2">{statsData?.param_four_value || ''}</div>
+                        <div className="text-gray-700">{statsData?.param_four_name || ''}</div>
                     </div>
                 </div>
             </div>

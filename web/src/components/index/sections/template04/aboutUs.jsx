@@ -38,7 +38,7 @@ export default function AboutUs({aboutData, companyName, statsData}) {
                                 {companyName}
                             </h3>
                             <p className="mb-6 text-gray-700"
-                               dangerouslySetInnerHTML={{__html: aboutData.aboutText}}>
+                               dangerouslySetInnerHTML={{__html: aboutData?.aboutText || ''}}>
                             </p>
 
                             <Link href="/about"
@@ -55,13 +55,15 @@ export default function AboutUs({aboutData, companyName, statsData}) {
 
                         {/* 右侧 */}
                         <div className="relative h-[300px] lg:h-full overflow-hidden">
-                            <Image
-                                src={`${process.env.NEXT_PUBLIC_BASE_URL}/upload/img/${aboutData.aboutCover}`}
-                                alt={companyName}
-                                fill
-                                className="object-cover"
-                                sizes="(max-width: 768px) 100vw, 50vw"
-                            />
+                            {aboutData?.aboutCover && (
+                                <Image
+                                    src={`${process.env.NEXT_PUBLIC_BASE_URL}/upload/img/${aboutData.aboutCover}`}
+                                    alt={companyName || ''}
+                                    fill
+                                    className="object-cover"
+                                    sizes="(max-width: 768px) 100vw, 50vw"
+                                />
+                            )}
                         </div>
                     </div>
                 </div>
@@ -69,20 +71,20 @@ export default function AboutUs({aboutData, companyName, statsData}) {
                 {/* 统计指标 */}
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 mt-16 text-center">
                     <div className={cardStyles[0]}>
-                        <div className="text-3xl md:text-4xl font-bold text-blue-700 mb-2">{statsData.param_one_value}</div>
-                        <div className="text-gray-700 font-medium">{statsData.param_one_name}</div>
+                        <div className="text-3xl md:text-4xl font-bold text-blue-700 mb-2">{statsData?.param_one_value || ''}</div>
+                        <div className="text-gray-700 font-medium">{statsData?.param_one_name || ''}</div>
                     </div>
                     <div className={cardStyles[1]}>
-                        <div className="text-3xl md:text-4xl font-bold text-teal-700 mb-2">{statsData.param_two_value}</div>
-                        <div className="text-gray-700 font-medium">{statsData.param_two_name}</div>
+                        <div className="text-3xl md:text-4xl font-bold text-teal-700 mb-2">{statsData?.param_two_value || ''}</div>
+                        <div className="text-gray-700 font-medium">{statsData?.param_two_name || ''}</div>
                     </div>
                     <div className={cardStyles[2]}>
-                        <div className="text-3xl md:text-4xl font-bold text-amber-700 mb-2">{statsData.param_three_value}</div>
-                        <div className="text-gray-700 font-medium">{statsData.param_three_name}</div>
+                        <div className="text-3xl md:text-4xl font-bold text-amber-700 mb-2">{statsData?.param_three_value || ''}</div>
+                        <div className="text-gray-700 font-medium">{statsData?.param_three_name || ''}</div>
                     </div>
                     <div className={cardStyles[3]}>
-                        <div className="text-3xl md:text-4xl font-bold text-rose-700 mb-2">{statsData.param_four_value}</div>
-                        <div className="text-gray-700 font-medium">{statsData.param_four_name}</div>
+                        <div className="text-3xl md:text-4xl font-bold text-rose-700 mb-2">{statsData?.param_four_value || ''}</div>
+                        <div className="text-gray-700 font-medium">{statsData?.param_four_name || ''}</div>
                     </div>
                 </div>
             </div>
