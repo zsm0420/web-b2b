@@ -16,7 +16,7 @@ const nextConfig = {
     },
     images: {
         unoptimized: true, // Cloudflare Pages需要禁用图片优化
-        domains: [process.env.NEXT_PUBLIC_HOST],
+        domains: [],
     },
     swcMinify: true,
     compiler: {
