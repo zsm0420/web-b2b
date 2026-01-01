@@ -17,22 +17,24 @@ export default function WhoWeAre({aboutData}) {
                     </div>
                     <p
                         className="flex-1 text-gray-700 mb-4 overflow-hidden relative"
-                        dangerouslySetInnerHTML={{__html: aboutData.aboutText}}>
+                        dangerouslySetInnerHTML={{__html: aboutData?.aboutText || ''}}>
 
                     </p>
                 </div>
                 <div className="w-full lg:w-1/2 mt-8 lg:mt-0">
-                    <div className="relative h-60 lg:h-96 bg-gray-100 rounded-3xl overflow-hidden">
-                        <Image
-                            src={`${process.env.NEXT_PUBLIC_BASE_URL}/upload/img/${aboutData.aboutCover}`}
-                            alt="About Us"
-                            fill
-                            quality={90}
-                            sizes="(max-width: 1024px) 100vw, 50vw"
-                            className="object-cover"
-                            priority
-                        />
-                    </div>
+                    {aboutData?.aboutCover && (
+                        <div className="relative h-60 lg:h-96 bg-gray-100 rounded-3xl overflow-hidden">
+                            <Image
+                                src={`${process.env.NEXT_PUBLIC_BASE_URL}/upload/img/${aboutData.aboutCover}`}
+                                alt="About Us"
+                                fill
+                                quality={90}
+                                sizes="(max-width: 1024px) 100vw, 50vw"
+                                className="object-cover"
+                                priority
+                            />
+                        </div>
+                    )}
                 </div>
             </div>
         </div>

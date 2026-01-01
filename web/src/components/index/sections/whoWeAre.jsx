@@ -13,21 +13,23 @@ export default function WhoWeAre({aboutData}) {
                     <h2 className="text-2xl lg:text-4xl font-bold text-gray-900 mb-6">{lang.WhoWeAre}</h2>
                     <p
                        className="flex-1 text-gray-700 mb-4 overflow-hidden relative"
-                       dangerouslySetInnerHTML={{ __html: aboutData.aboutText }} >
+                       dangerouslySetInnerHTML={{ __html: aboutData?.aboutText || '' }} >
                     </p>
                 </div>
                 <div>
-                    <div className="relative h-60 md:h-96 bg-gray-100 rounded-lg overflow-hidden">
-                        <Image
-                            src={`${process.env.NEXT_PUBLIC_BASE_URL}/upload/img/${aboutData.aboutCover}`}
-                            alt="About Us"
-                            fill
-                            quality={90}
-                            sizes="(max-width: 1024px) 100vw, 50vw"
-                            className="object-cover"
-                            priority
-                        />
-                    </div>
+                    {aboutData?.aboutCover && (
+                        <div className="relative h-60 md:h-96 bg-gray-100 rounded-lg overflow-hidden">
+                            <Image
+                                src={`${process.env.NEXT_PUBLIC_BASE_URL}/upload/img/${aboutData.aboutCover}`}
+                                alt="About Us"
+                                fill
+                                quality={90}
+                                sizes="(max-width: 1024px) 100vw, 50vw"
+                                className="object-cover"
+                                priority
+                            />
+                        </div>
+                    )}
                 </div>
             </div>
         </div>
