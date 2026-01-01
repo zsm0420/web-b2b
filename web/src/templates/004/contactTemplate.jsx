@@ -3,12 +3,16 @@ import Banner from "@/components/index/sections/bannerB";
 import RecommendedForYou from "@/components/index/sections/template04/recommendedForYou";
 
 export default function ContactTemplate({bannerData, contactData, recommendData}){
+    // 提供默认值以避免空指针错误
+    const safeBannerData = bannerData || {};
+    const safeContactData = contactData || {};
+    const safeRecommendData = recommendData || [];
     return (
         <div className="flex flex-col">
-            <Banner title="Contact Us" titleLink="/contact" bannerData={bannerData}/>
+            <Banner title="Contact Us" titleLink="/contact" bannerData={safeBannerData}/>
 
-            <GetInTouch contactData={contactData}/>
-            
+            <GetInTouch contactData={safeContactData}/>
+
             {/*分割线*/}
             <div className="w-full py-4 bg-white">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -18,8 +22,8 @@ export default function ContactTemplate({bannerData, contactData, recommendData}
 
 
             {
-                recommendData?.length > 0 && (
-                    <RecommendedForYou recommendData={recommendData}/>
+                safeRecommendData?.length > 0 && (
+                    <RecommendedForYou recommendData={safeRecommendData}/>
                 )
             }
 

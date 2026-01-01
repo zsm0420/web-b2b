@@ -7,21 +7,29 @@ import CustomersSay from "@/components/index/sections/customersSay";
 import CompanyNews from "@/components/index/sections/companyNews";
 
 export default function HomeTemplate({bannerData, featuredData, categoryData, aboutData, companyName, statsData, commentData, newsData}) {
+    // 提供默认值以避免空指针错误
+    const safeBannerData = bannerData || {};
+    const safeFeaturedData = featuredData || [];
+    const safeCategoryData = categoryData || [];
+    const safeAboutData = aboutData || {};
+    const safeStatsData = statsData || {};
+    const safeCommentData = commentData || [];
+    const safeNewsData = newsData || [];
     return (
         <div className="flex flex-col">
             <div className="w-full h-[200px] md:h-[300px] lg:h-[600px]">
-                <Carousel bannerData={bannerData}/>
+                <Carousel bannerData={safeBannerData}/>
             </div>
 
-            <FeaturedProducts featuredData={featuredData}/>
+            <FeaturedProducts featuredData={safeFeaturedData}/>
 
-            <OurCategories categoryData={categoryData}/>
+            <OurCategories categoryData={safeCategoryData}/>
 
-            <AboutUs aboutData={aboutData} companyName={companyName} statsData={statsData}/>
+            <AboutUs aboutData={safeAboutData} companyName={companyName} statsData={safeStatsData}/>
 
-            <CustomersSay commentData={commentData}/>
+            <CustomersSay commentData={safeCommentData}/>
 
-            <CompanyNews newsData={newsData}/>
+            <CompanyNews newsData={safeNewsData}/>
 
             <FacilityArea/>
         </div>

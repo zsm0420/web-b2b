@@ -4,17 +4,21 @@ import Banner from "@/components/index/sections/banner";
 import GetInTouch from "@/components/index/sections/template03/getInTouch";
 
 export default function ContactTemplate({bannerData, contactData, recommendData}){
+    // 提供默认值以避免空指针错误
+    const safeBannerData = bannerData || {};
+    const safeContactData = contactData || {};
+    const safeRecommendData = recommendData || [];
     return (
         <div className="flex flex-col">
             <div className="w-full h-[200px]">
-                <Banner title="Contact Us" bannerData={bannerData}/>
+                <Banner title="Contact Us" bannerData={safeBannerData}/>
             </div>
 
-            <GetInTouch contactData={contactData}/>
+            <GetInTouch contactData={safeContactData}/>
 
             {
-                recommendData?.length > 0 && (
-                    <RecommendedForYou recommendData={recommendData}/>
+                safeRecommendData?.length > 0 && (
+                    <RecommendedForYou recommendData={safeRecommendData}/>
                 )
             }
 

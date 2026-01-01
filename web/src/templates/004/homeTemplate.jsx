@@ -11,26 +11,35 @@ import ContactUs from "@/components/index/sections/template04/contactUs";
 
 
 export default function HomeTemplate({bannerData, featuredData, categoryData, aboutData, companyName, statsData, commentData, newsData, heroText, contactData}) {
+    // 提供默认值以避免空指针错误
+    const safeBannerData = bannerData || {};
+    const safeFeaturedData = featuredData || [];
+    const safeCategoryData = categoryData || [];
+    const safeAboutData = aboutData || {};
+    const safeStatsData = statsData || {};
+    const safeCommentData = commentData || [];
+    const safeNewsData = newsData || [];
+    const safeContactData = contactData || {};
     return (
         <div className="flex flex-col">
             <div className="w-full h-[300px] md:h-[500px] lg:h-[calc(100vh-80px)]">
-                <Carousel bannerData={bannerData} heroText={heroText}/>
+                <Carousel bannerData={safeBannerData} heroText={heroText}/>
             </div>
 
 
 
 
-            <OurCategories categoryData={categoryData}/>
+            <OurCategories categoryData={safeCategoryData}/>
 
-            <AboutUs aboutData={aboutData} companyName={companyName} statsData={statsData}/>
+            <AboutUs aboutData={safeAboutData} companyName={companyName} statsData={safeStatsData}/>
 
-            <FeaturedProducts featuredData={featuredData}/>
+            <FeaturedProducts featuredData={safeFeaturedData}/>
 
-            <CustomersSay commentData={commentData}/>
+            <CustomersSay commentData={safeCommentData}/>
 
-            <CompanyNews newsData={newsData}/>
+            <CompanyNews newsData={safeNewsData}/>
 
-            <ContactUs contactData={contactData} />
+            <ContactUs contactData={safeContactData} />
 
 
         </div>
