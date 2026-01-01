@@ -52,7 +52,7 @@ export default async function RootLayout({children}) {
     const {navSectionData, footerSectionData} = await getSectionData();
     
     // 获取模板id
-    const templateId = process.env.NEXT_PUBLIC_TEMPLATE_ID;
+    const templateId = process.env.NEXT_PUBLIC_TEMPLATE_ID || '001';
     
     // 获取当前模板的字体
     const font = getTemplateFont();

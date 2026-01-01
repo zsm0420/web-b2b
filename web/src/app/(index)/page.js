@@ -7,7 +7,7 @@ export default async function Home() {
     const sectionData = await getSectionDataCached();
 
     // 获取模板id
-    const templateId = process.env.NEXT_PUBLIC_TEMPLATE_ID;
+    const templateId = process.env.NEXT_PUBLIC_TEMPLATE_ID || '001';
 
     // 准备传递给模板的props
     const templateProps = {
