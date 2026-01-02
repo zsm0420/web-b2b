@@ -6,6 +6,7 @@ import SendMessage from "@/components/index/sections/sendMessage";
 import TipBar from "@/components/index/sections/tipbar";
 
 export default function IndexLayoutTemplate({navSectionData, footerSectionData, children}) {
+    const gaId = navSectionData?.basicSite?.site_gaid;
     return (
         <>
             <div className="flex flex-col min-h-screen">
@@ -19,7 +20,7 @@ export default function IndexLayoutTemplate({navSectionData, footerSectionData, 
                 <TipBar sectionData={navSectionData}/>
             </div>
             {/*谷歌分析*/}
-            <GoogleAnalytics gaId={navSectionData?.basicSite?.site_gaid || ''} />
+            {gaId && <GoogleAnalytics gaId={gaId} />}
         </>
     );
 }

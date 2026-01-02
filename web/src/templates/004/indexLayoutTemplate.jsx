@@ -8,6 +8,7 @@ import TipBar from "@/components/index/sections/tipbar";
 import SwitchLangB from "@/components/index/sections/switchLangB";
 
 export default function IndexLayoutTemplate({navSectionData, footerSectionData, children}) {
+    const gaId = navSectionData?.basicSite?.site_gaid;
     return (
         <>
             <div className="flex flex-col min-h-screen">
@@ -23,7 +24,7 @@ export default function IndexLayoutTemplate({navSectionData, footerSectionData, 
             {/* 语言切换器  */}
             {/*<SwitchLangB/>*/}
             {/*谷歌分析*/}
-            <GoogleAnalytics gaId={navSectionData?.basicSite?.site_gaid || ''} />
+            {gaId && <GoogleAnalytics gaId={gaId} />}
         </>
     );
 }
