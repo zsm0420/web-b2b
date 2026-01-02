@@ -183,13 +183,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # 跨域配置
 CORS_ALLOW_CREDENTIALS = False
-CORS_ORIGIN_ALLOW_ALL = False  # 3.x之前写法
-CORS_ALLOW_ALL_ORIGINS = False  # 3.3以上写法
-CORS_ALLOWED_ORIGINS = [
-    "https://web-b2b-pi.vercel.app",
-    "http://localhost:3000",
-    "http://127.0.0.1:3000",
-]
+CORS_ORIGIN_ALLOW_ALL = True  # 允许所有域名访问，开发环境使用
 
 
 # django上传文件限制 (内存阈值)
