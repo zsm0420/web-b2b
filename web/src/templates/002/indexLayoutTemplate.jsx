@@ -20,7 +20,7 @@ export default function IndexLayoutTemplate({navSectionData, footerSectionData, 
                 <TipBar sectionData={navSectionData}/>
             </div>
             {/*谷歌分析*/}
-            <GoogleAnalytics gaId={navSectionData.basicSite.site_gaid} />
+            <GoogleAnalytics gaId={navSectionData?.basicSite?.site_gaid || ''} />
         </>
     );
 }

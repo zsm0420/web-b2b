@@ -23,7 +23,7 @@ export default function IndexLayoutTemplate({navSectionData, footerSectionData, 
             {/* 语言切换器  */}
             {/*<SwitchLangB/>*/}
             {/*谷歌分析*/}
-            <GoogleAnalytics gaId={navSectionData.basicSite.site_gaid} />
+            <GoogleAnalytics gaId={navSectionData?.basicSite?.site_gaid || ''} />
         </>
     );
 }
