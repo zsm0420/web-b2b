@@ -63,7 +63,7 @@ export default async function RootLayout({children}) {
 
     // 检查网站状态
     const isWebsiteDown = navSectionData?.basicSite?.status === "2";
-    
+
     // 如果网站状态为关闭
     if (isWebsiteDown) {
         return (
@@ -79,19 +79,19 @@ export default async function RootLayout({children}) {
                     <div className="max-w-md w-full mx-auto bg-white rounded-md shadow-lg p-8 text-center">
                         {navSectionData?.basicSite?.site_logo && (
                             <div className="flex justify-center mb-6">
-                                <img 
-                                    src={`${process.env.NEXT_PUBLIC_BASE_URL}/upload/img/${navSectionData.basicSite.site_logo}`} 
-                                    alt="Website Logo" 
-                                    className="h-16 w-auto" 
+                                <img
+                                    src={`${process.env.NEXT_PUBLIC_BASE_URL}/upload/img/${navSectionData.basicSite.site_logo}`}
+                                    alt="Website Logo"
+                                    className="h-16 w-auto"
                                 />
                             </div>
                         )}
-                        
+
                         <h1 className="text-2xl font-bold text-gray-800 mb-4">Website Under Maintenance</h1>
                         <p className="text-gray-600 mb-6">
                             {navSectionData?.basicSite?.closeMessage || "We are currently performing scheduled maintenance. Please check back later."}
                         </p>
-                        
+
                         <div className="mt-8 text-gray-500 text-sm">
                             &copy; {new Date().getFullYear()} {navSectionData?.basicSite?.site_name || "Company Website"} | Technical Support
                         </div>
@@ -100,11 +100,11 @@ export default async function RootLayout({children}) {
             </html>
         );
     }
-    
+
     // 动态导入对应模板
     const IndexLayoutTemplateModule = await import(`@/templates/${templateId}/indexLayoutTemplate`);
     const IndexLayoutTemplate = IndexLayoutTemplateModule.default;
-    
+
     return (
         <html lang="en" suppressHydrationWarning>
             <head>
@@ -114,8 +114,8 @@ export default async function RootLayout({children}) {
                 <ThemeScript />
             </head>
             <body className={`${font.className} bg-white overflow-x-hidden`}>
-                <IndexLayoutTemplate 
-                    navSectionData={navSectionData} 
+                <IndexLayoutTemplate
+                    navSectionData={navSectionData}
                     footerSectionData={footerSectionData}
                 >
                     {children}
