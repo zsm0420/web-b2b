@@ -11,8 +11,9 @@ const nextConfig = {
     env: {
         NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME: "da9h8exvs",
         NEXT_PUBLIC_CLOUDINARY_PRESET_NAME: "fi0lxkc1",
-        // 添加后端API地址（部署后需要在Cloudflare Pages设置环境变量）
-        NEXT_PUBLIC_API_URL: process.env.NEXT_PUBLIC_API_URL || 'http://127.0.0.1:8000',
+        NEXT_PUBLIC_API_URL: process.env.NEXT_PUBLIC_API_URL || 'https://web-b2b.onrender.com',
+        NEXT_PUBLIC_BASE_URL: process.env.NEXT_PUBLIC_BASE_URL || 'https://web-b2b-pi.vercel.app',
+        NEXT_PUBLIC_TEMPLATE_ID: process.env.NEXT_PUBLIC_TEMPLATE_ID || '001',
     },
     images: {
         unoptimized: true, // Cloudflare Pages需要禁用图片优化
