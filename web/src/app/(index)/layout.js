@@ -49,14 +49,18 @@ const getInitialThemeStyles = () => {
 };
 
 export default async function RootLayout({children}) {
-    const {navSectionData, footerSectionData} = await getSectionData();
-    
+    const sectionData = await getSectionData();
+
+    // 提供默认值防止 null 错误
+    const safeSectionData = sectionData || {};
+    const {navSectionData, footerSectionData} = safeSectionData;
+
     // 获取模板id
     const templateId = process.env.NEXT_PUBLIC_TEMPLATE_ID || '001';
-    
+
     // 获取当前模板的字体
     const font = getTemplateFont();
-    
+
     // 检查网站状态
     const isWebsiteDown = navSectionData?.basicSite?.status === "2";
     
