@@ -3,7 +3,7 @@
 import {Roboto, Open_Sans, Lato, Nunito, Merriweather, Montserrat } from 'next/font/google';
 import "@/styles/globals.css";
 import api from "@/utils/axiosApi";
-import ThemeScript from '@/components/index/sections/ThemeScript';
+
 
 export const revalidate = 0
 
@@ -73,8 +73,7 @@ export default function RootLayout({children}) {
             <head>
                 {/* 内联样式优先设置主题变量 */}
                 <style dangerouslySetInnerHTML={{ __html: getInitialThemeStyles() }} />
-                {/* 优先加载主题脚本 */}
-                <ThemeScript />
+
             </head>
             <body className={`${font.className} bg-white overflow-x-hidden`}>
                 {/* 动态导入模板组件 */}
