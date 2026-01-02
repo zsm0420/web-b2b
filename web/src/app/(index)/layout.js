@@ -2,7 +2,7 @@
 
 import {Roboto, Open_Sans, Lato, Nunito, Merriweather, Montserrat } from 'next/font/google';
 import "@/styles/globals.css";
-import api from "@/utils/axiosApi";
+
 
 
 export const revalidate = 0
