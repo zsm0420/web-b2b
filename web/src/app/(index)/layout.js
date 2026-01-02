@@ -48,31 +48,18 @@ const getInitialThemeStyles = () => {
     `;
 };
 
-export default async function RootLayout({children}) {
-    const sectionData = await getSectionData();
-
+export default function RootLayout({children}) {
     // 提供默认值防止 null 错误
-    const safeSectionData = sectionData || {};
-
-    // 确保 navSectionData 和 footerSectionData 有默认值
     const navSectionData = {
-        ...safeSectionData.navSectionData,
-        basicSite: safeSectionData.navSectionData?.basicSite || {},
-        basicGlobal: safeSectionData.navSectionData?.basicGlobal || {},
-        navigationItems: Array.isArray(safeSectionData.navSectionData?.navigationItems)
-            ? safeSectionData.navSectionData.navigationItems
-            : [],
+        basicSite: {},
+        basicGlobal: {},
+        navigationItems: [],
     };
 
     const footerSectionData = {
-        ...safeSectionData.footerSectionData,
-        navData: Array.isArray(safeSectionData.footerSectionData?.navData)
-            ? safeSectionData.footerSectionData.navData
-            : [],
-        categoryData: Array.isArray(safeSectionData.footerSectionData?.categoryData)
-            ? safeSectionData.footerSectionData.categoryData
-            : [],
-        contactData: safeSectionData.footerSectionData?.contactData || {},
+        navData: [],
+        categoryData: [],
+        contactData: {},
     };
 
     // 获取模板id
@@ -80,50 +67,6 @@ export default async function RootLayout({children}) {
 
     // 获取当前模板的字体
     const font = getTemplateFont();
-
-    // 检查网站状态
-    const isWebsiteDown = navSectionData?.basicSite?.status === "2";
-
-    // 如果网站状态为关闭
-    if (isWebsiteDown) {
-        return (
-            <html lang="en" suppressHydrationWarning>
-                <head>
-                    <title>Website Under Maintenance</title>
-                    {/* 内联样式优先设置主题变量 */}
-                    <style dangerouslySetInnerHTML={{ __html: getInitialThemeStyles() }} />
-                    {/* 优先加载主题脚本 */}
-                    <ThemeScript />
-                </head>
-                <body className={`${font.className} bg-gray-50 overflow-x-hidden flex items-center justify-center min-h-screen`}>
-                    <div className="max-w-md w-full mx-auto bg-white rounded-md shadow-lg p-8 text-center">
-                        {navSectionData?.basicSite?.site_logo && (
-                            <div className="flex justify-center mb-6">
-                                <img
-                                    src={`${process.env.NEXT_PUBLIC_BASE_URL}/upload/img/${navSectionData.basicSite.site_logo}`}
-                                    alt="Website Logo"
-                                    className="h-16 w-auto"
-                                />
-                            </div>
-                        )}
-
-                        <h1 className="text-2xl font-bold text-gray-800 mb-4">Website Under Maintenance</h1>
-                        <p className="text-gray-600 mb-6">
-                            {navSectionData?.basicSite?.closeMessage || "We are currently performing scheduled maintenance. Please check back later."}
-                        </p>
-
-                        <div className="mt-8 text-gray-500 text-sm">
-                            &copy; {new Date().getFullYear()} {navSectionData?.basicSite?.site_name || "Company Website"} | Technical Support
-                        </div>
-                    </div>
-                </body>
-            </html>
-        );
-    }
-
-    // 动态导入对应模板
-    const IndexLayoutTemplateModule = await import(`@/templates/${templateId}/indexLayoutTemplate`);
-    const IndexLayoutTemplate = IndexLayoutTemplateModule.default;
 
     return (
         <html lang="en" suppressHydrationWarning>
@@ -134,30 +77,12 @@ export default async function RootLayout({children}) {
                 <ThemeScript />
             </head>
             <body className={`${font.className} bg-white overflow-x-hidden`}>
-                <IndexLayoutTemplate
-                    navSectionData={navSectionData}
-                    footerSectionData={footerSectionData}
-                >
-                    {children}
-                </IndexLayoutTemplate>
+                {/* 动态导入模板组件 */}
+                {children}
             </body>
         </html>
     );
 }
 
 
-// 服务端获取数据
-async function getSectionData() {
-    try {
-        const {code, msg, data} = await api.get('/myapp/index/common/section');
-        if (code === 0) {
-            return data;
-        } else {
-            console.error(`获取导航数据错误: ${msg}`);
-            return null;
-        }
-    } catch (err) {
-        console.error("获取导航数据失败:", err);
-        return null;
-    }
-}
+
