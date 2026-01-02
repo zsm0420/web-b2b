@@ -6,22 +6,25 @@ export default async function Page({params}) {
     const pageNumber = getPageNumber(params?.slug);
     const urlParams = {page: pageNumber, pageSize: 9};
     const sectionData = await getSectionDataCached(urlParams);
-    
+
+    // 提供默认值防止 null 错误
+    const safeSectionData = sectionData || {};
+
     // 获取模板id
     const templateId = process.env.NEXT_PUBLIC_TEMPLATE_ID;
 
     // 准备传递给模板的props
     const templateProps = {
-        bannerData: sectionData.bannerData,
+        bannerData: safeSectionData.bannerData,
         pageNumber: pageNumber,
-        total: sectionData.total,
-        caseData: sectionData.caseData
+        total: safeSectionData.total,
+        caseData: safeSectionData.caseData
     };
 
     // 动态导入对应模板
     const CaseTemplateModule = await import(`@/templates/${templateId}/caseTemplate`);
     const CaseTemplate = CaseTemplateModule.default;
-    
+
     return <CaseTemplate {...templateProps} />;
 }
 

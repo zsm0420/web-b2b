@@ -38,7 +38,11 @@ export default async function Page({params, searchParams}) {
     const searchQuery = searchParams?.s || '';
 
     const urlParams = {page: pageNumber, pageSize: pageSize, categoryId, searchQuery}
-    const {bannerData, categoryData, productData, featuredData, total} = await getSectionDataCached(urlParams)
+    const sectionData = await getSectionDataCached(urlParams);
+
+    // 提供默认值防止 null 错误
+    const safeSectionData = sectionData || {};
+    const {bannerData, categoryData, productData, featuredData, total} = safeSectionData;
 
     // 获取模板id
     const templateId = process.env.NEXT_PUBLIC_TEMPLATE_ID;
@@ -67,9 +71,13 @@ export async function generateMetadata({params}) {
     // 使用缓存的函数获取案例详情数据
     const data = await getSectionDataCached({page: 1, pageSize: 9});
 
+    // 提供默认值防止 null 错误
+    const safeData = data || {};
+    const seoData = safeData.seoData || {};
+
     // 从详情数据中提取信息
-    const {seo_title, seo_description, seo_keywords} = data.seoData;
-    const siteName = data.siteName;
+    const {seo_title, seo_description, seo_keywords} = seoData;
+    const siteName = safeData.siteName;
 
     // 返回动态生成的metadata
     return {
@@ -81,7 +89,7 @@ export async function generateMetadata({params}) {
             title: seo_title || 'Products',
             description: seo_description || 'Products',
             url: process.env.NEXT_PUBLIC_BASE_URL,
-            siteName: siteName,
+            siteName: siteName || '',
             image: '',
             type: 'website',
         },

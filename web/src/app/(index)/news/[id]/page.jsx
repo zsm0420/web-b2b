@@ -32,29 +32,33 @@ export async function generateMetadata({params}) {
     // 使用缓存的函数获取案例详情数据
     const data = await getNewsDetailCached(id);
 
+    // 提供默认值防止 null 错误
+    const safeData = data || {};
+    const detailData = safeData.detailData || {};
+
     // 从详情数据中提取信息
-    const {seo_title, seo_description, seo_keywords, title} = data.detailData;
-    const siteName = data.siteName;
+    const {seo_title, seo_description, seo_keywords, title} = detailData;
+    const siteName = safeData.siteName;
 
     // 返回动态生成的metadata
     return {
-        title: seo_title || title,
-        description: seo_description || title,
-        keywords: seo_keywords || title,
+        title: seo_title || title || 'News',
+        description: seo_description || title || 'News',
+        keywords: seo_keywords || title || 'News',
         // Open Graph
         openGraph: {
-            title: seo_title || title,
-            description: seo_description || title,
+            title: seo_title || title || 'News',
+            description: seo_description || title || 'News',
             url: process.env.NEXT_PUBLIC_BASE_URL,
-            siteName: siteName,
+            siteName: siteName || '',
             image: '',
             type: 'website',
         },
         // Twitter
         twitter: {
             card: 'summary',
-            title: seo_title || siteName || title,
-            description: seo_description || siteName || title,
+            title: seo_title || siteName || title || 'News',
+            description: seo_description || siteName || title || 'News',
             image: '',
         },
         robots: {

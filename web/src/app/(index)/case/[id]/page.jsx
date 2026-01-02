@@ -31,14 +31,18 @@ export async function generateMetadata({params}) {
     // 使用缓存的函数获取案例详情数据
     const data = await getCaseDetailCached(id);
 
+    // 提供默认值防止 null 错误
+    const safeData = data || {};
+    const detailData = safeData.detailData || {};
+
     // 从详情数据中提取信息
-    const {seo_title, seo_description, seo_keywords, title} = data.detailData;
+    const {seo_title, seo_description, seo_keywords, title} = detailData;
 
     // 返回动态生成的metadata
     return {
-        title: seo_title || title,
-        description: seo_description || title,
-        keywords: seo_keywords || title,
+        title: seo_title || title || 'Case',
+        description: seo_description || title || 'Case',
+        keywords: seo_keywords || title || 'Case',
     };
 }
 

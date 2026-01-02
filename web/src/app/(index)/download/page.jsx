@@ -6,19 +6,22 @@ import {getIp} from "@/utils/tools";
 export default async function Page() {
     const sectionData = await getSectionDataCached();
 
+    // 提供默认值防止 null 错误
+    const safeSectionData = sectionData || {};
+
     // 获取模板id
     const templateId = process.env.NEXT_PUBLIC_TEMPLATE_ID;
 
     // 准备传递给模板的props
     const templateProps = {
-        bannerData: sectionData.bannerData,
-        downloadData: sectionData.downloadData
+        bannerData: safeSectionData.bannerData,
+        downloadData: safeSectionData.downloadData
     };
 
     // 动态导入对应模板
     const DownloadTemplateModule = await import(`@/templates/${templateId}/downloadTemplate`);
     const DownloadTemplate = DownloadTemplateModule.default;
-    
+
     return <DownloadTemplate {...templateProps} />;
 }
 
