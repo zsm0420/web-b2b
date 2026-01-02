@@ -2,41 +2,57 @@ import api from "@/utils/axiosApi";
 import {cache} from "react";
 import {getIp} from "@/utils/tools";
 
+// 为静态导出生成参数
+export async function generateStaticParams() {
+    // 生成一些示例页面参数
+    return [
+        { slug: [] }, // 首页参数
+        { slug: ['page', '1'] }, // 第一页
+        { slug: ['page', '2'] }, // 第二页
+        { slug: ['page', '3'] }, // 第三页
+    ];
+}
+
 export default async function Page({params}) {
-
-    let pageSize = 9;
-
-    const id = process.env.NEXT_PUBLIC_TEMPLATE_ID;
-
-    // 兼容模板
-    if (['006', '009'].includes(id)) {
-        pageSize = 10;
-    }
-
-    const pageNumber = getPageNumber(params?.slug);
-    const urlParams = {page: pageNumber, pageSize: pageSize};
-    const sectionData = await getSectionDataCached(urlParams);
-
-    // 如果获取数据失败，使用默认空数据
-    const templateProps = {
-        bannerData: sectionData?.bannerData || null,
-        pageNumber: pageNumber,
-        pageSize: pageSize,
-        total: sectionData?.total || 0,
-        newsData: sectionData?.newsData || [],
-        featuredData: sectionData?.featuredData || []
-    };
-
-    // 获取模板id
-    const templateId = process.env.NEXT_PUBLIC_TEMPLATE_ID;
-
     try {
+        let pageSize = 9;
+
+        const id = process.env.NEXT_PUBLIC_TEMPLATE_ID;
+
+        // 兼容模板
+        if (['006', '009'].includes(id)) {
+            pageSize = 10;
+        }
+
+        const pageNumber = getPageNumber(params?.slug);
+        const urlParams = {page: pageNumber, pageSize: pageSize};
+        const sectionData = await getSectionDataCached(urlParams);
+
+        // 如果获取数据失败，使用默认空数据
+        const templateProps = {
+            bannerData: sectionData?.bannerData || null,
+            pageNumber: pageNumber,
+            pageSize: pageSize,
+            total: sectionData?.total || 0,
+            newsData: sectionData?.newsData || [],
+            featuredData: sectionData?.featuredData || []
+        };
+
+        // 获取模板id
+        const templateId = process.env.NEXT_PUBLIC_TEMPLATE_ID;
+
         // 动态导入对应模板
         const NewsTemplateModule = await import(`@/templates/${templateId}/newsTemplate`);
         const NewsTemplate = NewsTemplateModule.default;
         return <NewsTemplate {...templateProps} />;
     } catch (error) {
-        return <div>新闻页面加载失败</div>;
+        console.error('News page error:', error);
+        return (
+            <div className="p-10 text-center">
+                <h1 className="text-2xl font-bold mb-4">新闻中心</h1>
+                <p className="text-gray-600">数据加载中...</p>
+            </div>
+        );
     }
 }
 

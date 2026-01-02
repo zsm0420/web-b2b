@@ -5,7 +5,7 @@ import "@/styles/globals.css";
 
 
 
-export const revalidate = 0
+export const revalidate = 0 // 启用实时动态渲染
 
 // 预加载所有字体
 const lato = Lato({ subsets: ["latin"], weight: ['400','700'] });

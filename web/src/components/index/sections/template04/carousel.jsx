@@ -13,7 +13,12 @@ import lang from '@/locales';
 
 
 const Carousel = ({bannerData, heroText}) => {
-    const coverArr = bannerData ? bannerData.split('#') : [];
+    // 安全处理bannerData，确保是字符串类型
+    const bannerStr = typeof bannerData === 'string' ? bannerData : 
+                      typeof bannerData === 'object' && bannerData !== null ? 
+                      JSON.stringify(bannerData) : '';
+    
+    const coverArr = bannerStr ? bannerStr.split('#').filter(item => item.trim()) : [];
 
     const colorValue = "bg-mainColorNormalAlpha-50 hover:bg-mainColorNormal text-white hover:text-white backdrop-blur-sm";
     const commonStyle = "z-10 absolute flex items-center justify-center transform -translate-y-1/2 w-[40px] h-[40px] focus:outline-none transition-all duration-300 ease-in-out hidden md:block";

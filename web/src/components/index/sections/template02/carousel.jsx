@@ -12,7 +12,12 @@ import {Navigation, Autoplay, Pagination, EffectFade} from "swiper/modules";
 
 const Carousel = ({bannerData}) => {
 
-    const coverArr = bannerData ? bannerData.split('#') : [];
+    // 安全处理bannerData，确保是字符串类型
+    const bannerStr = typeof bannerData === 'string' ? bannerData : 
+                      typeof bannerData === 'object' && bannerData !== null ? 
+                      JSON.stringify(bannerData) : '';
+    
+    const coverArr = bannerStr ? bannerStr.split('#').filter(item => item.trim()) : [];
 
     const colorValue = "bg-black/20 hover:bg-black/50 text-white hover:text-white border border-white/30 backdrop-blur-sm";
     return (

@@ -12,10 +12,14 @@ export default function ProductTemplate({
                                             featuredData,
                                             searchQuery
                                         }) {
+    // 确保bannerData是字符串类型
+    const bannerString = typeof bannerData === 'string' ? bannerData : 
+                        (bannerData && typeof bannerData === 'object' && bannerData.length > 0 ? bannerData[0] : '');
+    
     return (
         <div className="">
             <div className="w-full h-[200px]">
-                <Banner title="Products" bannerData={bannerData}/>
+                <Banner title="Products" bannerData={bannerString}/>
             </div>
 
             <ProductList

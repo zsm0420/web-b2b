@@ -4,9 +4,11 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "NODE_OPTIONS='--max-old-space-size=4096' next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "export": "next export",
+    "vercel-build": "NODE_OPTIONS='--max-old-space-size=4096' npm run build"
   },
   "dependencies": {
     "@ant-design/icons": "^5.6.1",

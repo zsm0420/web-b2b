@@ -2,27 +2,37 @@ import api from "@/utils/axiosApi";
 import {cache} from "react";
 import {getIp} from "@/utils/tools";
 
-
 export default async function Page() {
-    const sectionData = await getSectionDataCached();
+    try {
+        const sectionData = await getSectionDataCached();
 
-    // 提供默认值防止 null 错误
-    const safeSectionData = sectionData || {};
+        // 提供默认值防止 null 错误
+        const safeSectionData = sectionData || {};
 
-    // 获取模板id
-    const templateId = process.env.NEXT_PUBLIC_TEMPLATE_ID;
+        // 获取模板id
+        const templateId = process.env.NEXT_PUBLIC_TEMPLATE_ID;
 
-    // 准备传递给模板的props
-    const templateProps = {
-        bannerData: safeSectionData.bannerData,
-        downloadData: safeSectionData.downloadData
-    };
+        // 准备传递给模板的props
+        const templateProps = {
+            bannerData: safeSectionData.bannerData || {},
+            downloadData: safeSectionData.downloadData || []
+        };
 
-    // 动态导入对应模板
-    const DownloadTemplateModule = await import(`@/templates/${templateId}/downloadTemplate`);
-    const DownloadTemplate = DownloadTemplateModule.default;
+        // 动态导入对应模板
+        const DownloadTemplateModule = await import(`@/templates/${templateId}/downloadTemplate`);
+        const DownloadTemplate = DownloadTemplateModule.default;
 
-    return <DownloadTemplate {...templateProps} />;
+        return <DownloadTemplate {...templateProps} />;
+    } catch (error) {
+        console.error('Download page error:', error);
+        // 如果API调用失败，显示错误页面
+        return (
+            <div className="p-10 text-center">
+                <h1 className="text-2xl font-bold mb-4">下载页面</h1>
+                <p className="text-gray-600">数据加载中...</p>
+            </div>
+        );
+    }
 }
 
 export async function generateMetadata({ params }) {

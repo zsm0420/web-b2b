@@ -3,24 +3,40 @@ import {cache} from "react";
 import {getIp} from "@/utils/tools";
 
 export default async function Page() {
-    const sectionData = await getSectionDataCached();
-
-    // 如果获取数据失败，使用默认空数据
-    const templateProps = {
-        bannerData: sectionData?.bannerData || null,
-        faqData: sectionData?.faqData || null
-    };
-
-    // 获取模板id
-    const templateId = process.env.NEXT_PUBLIC_TEMPLATE_ID;
-
     try {
-        // 动态导入对应模板
-        const FaqTemplateModule = await import(`@/templates/${templateId}/faqTemplate`);
-        const FaqTemplate = FaqTemplateModule.default;
-        return <FaqTemplate {...templateProps} />;
+        const sectionData = await getSectionDataCached();
+
+        // 如果获取数据失败，使用默认空数据
+        const templateProps = {
+            bannerData: sectionData?.bannerData || {},
+            faqData: sectionData?.faqData || []
+        };
+
+        // 获取模板id
+        const templateId = process.env.NEXT_PUBLIC_TEMPLATE_ID;
+
+        try {
+            // 动态导入对应模板
+            const FaqTemplateModule = await import(`@/templates/${templateId}/faqTemplate`);
+            const FaqTemplate = FaqTemplateModule.default;
+            return <FaqTemplate {...templateProps} />;
+        } catch (templateError) {
+            console.error('Template import error:', templateError);
+            return (
+                <div className="p-10 text-center">
+                    <h1 className="text-2xl font-bold mb-4">常见问题</h1>
+                    <p className="text-gray-600">FAQ 页面加载中...</p>
+                </div>
+            );
+        }
     } catch (error) {
-        return <div>FAQ 页面加载失败</div>;
+        console.error('FAQ page error:', error);
+        return (
+            <div className="p-10 text-center">
+                <h1 className="text-2xl font-bold mb-4">常见问题</h1>
+                <p className="text-gray-600">数据加载中...</p>
+            </div>
+        );
     }
 }
 

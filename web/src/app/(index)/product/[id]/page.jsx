@@ -2,6 +2,18 @@ import {cache} from "react";
 import api from "@/utils/axiosApi";
 import {getIp} from "@/utils/tools";
 
+// 为静态导出生成参数
+export async function generateStaticParams() {
+    // 生成一些示例产品ID参数
+    return [
+        { id: '1' },
+        { id: '2' },
+        { id: '3' },
+        { id: '4' },
+        { id: '5' },
+    ];
+}
+
 // 使用React的缓存机制优化API调用
 const getThingDetailCached = cache(async (id) => {
     try {

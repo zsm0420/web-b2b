@@ -2,6 +2,18 @@ import {cache, Suspense} from 'react';
 import api from "@/utils/axiosApi";
 import {getIp} from "@/utils/tools";
 
+// 为静态导出生成参数
+export async function generateStaticParams() {
+    // 生成一些示例新闻ID参数
+    return [
+        { id: '1' },
+        { id: '2' },
+        { id: '3' },
+        { id: '4' },
+        { id: '5' },
+    ];
+}
+
 // 使用React的缓存机制优化API调用
 const getNewsDetailCached = cache(async (id) => {    // 这里应该是从API获取数据
     try {
@@ -70,13 +82,13 @@ export async function generateMetadata({params}) {
 
 
 export default async function Page({params}) {
-    const {id} = params;
-    const data = await getNewsDetailCached(id);
-
-    // 获取模板id
-    const templateId = process.env.NEXT_PUBLIC_TEMPLATE_ID;
-
     try {
+        const {id} = params;
+        const data = await getNewsDetailCached(id);
+
+        // 获取模板id
+        const templateId = process.env.NEXT_PUBLIC_TEMPLATE_ID;
+
         if (!data) {
             // 动态导入对应模板并传入空数据
             const NewsDetailTemplateModule = await import(`@/templates/${templateId}/newsDetailTemplate`);
@@ -114,6 +126,12 @@ export default async function Page({params}) {
 
         return <NewsDetailTemplate {...templateProps} />;
     } catch (error) {
-        return <div>新闻详情页面加载失败</div>;
+        console.error('News detail page error:', error);
+        return (
+            <div className="p-10 text-center">
+                <h1 className="text-2xl font-bold mb-4">新闻详情</h1>
+                <p className="text-gray-600">数据加载中...</p>
+            </div>
+        );
     }
 }
