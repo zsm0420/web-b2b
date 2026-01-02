@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import lang from "@/locales"
+import {safeMap, safeGet} from "@/utils/propsSafe";
 
 export default function Footer({sectionData}) {
 
@@ -15,7 +16,7 @@ export default function Footer({sectionData}) {
                                 {lang.Navigation}
                             </h3>
                             <ul className="space-y-2">
-                                {sectionData.navData.map((item) => (
+                                {safeMap(sectionData?.navData, (item) => (
                                     <li key={item.name}>
                                         <Link href={item.href}
                                               className="text-gray-600 hover:text-mainColorNormal transition-colors flex items-center">
@@ -36,7 +37,7 @@ export default function Footer({sectionData}) {
                                 {lang.ProductCategories}
                             </h3>
                             <ul className="space-y-2">
-                                {sectionData.categoryData.map((item) => (
+                                {safeMap(sectionData?.categoryData, (item) => (
                                     <li key={item.id}>
                                         <Link href={'/product/category/' + item.id}
                                               className="text-gray-600 hover:text-mainColorNormal transition-colors flex items-center">

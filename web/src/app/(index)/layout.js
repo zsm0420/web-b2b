@@ -53,7 +53,27 @@ export default async function RootLayout({children}) {
 
     // 提供默认值防止 null 错误
     const safeSectionData = sectionData || {};
-    const {navSectionData, footerSectionData} = safeSectionData;
+
+    // 确保 navSectionData 和 footerSectionData 有默认值
+    const navSectionData = {
+        ...safeSectionData.navSectionData,
+        basicSite: safeSectionData.navSectionData?.basicSite || {},
+        basicGlobal: safeSectionData.navSectionData?.basicGlobal || {},
+        navigationItems: Array.isArray(safeSectionData.navSectionData?.navigationItems)
+            ? safeSectionData.navSectionData.navigationItems
+            : [],
+    };
+
+    const footerSectionData = {
+        ...safeSectionData.footerSectionData,
+        navData: Array.isArray(safeSectionData.footerSectionData?.navData)
+            ? safeSectionData.footerSectionData.navData
+            : [],
+        categoryData: Array.isArray(safeSectionData.footerSectionData?.categoryData)
+            ? safeSectionData.footerSectionData.categoryData
+            : [],
+        contactData: safeSectionData.footerSectionData?.contactData || {},
+    };
 
     // 获取模板id
     const templateId = process.env.NEXT_PUBLIC_TEMPLATE_ID || '001';
