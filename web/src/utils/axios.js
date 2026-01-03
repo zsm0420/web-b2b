@@ -14,8 +14,17 @@ axiosInstance.interceptors.request.use(
     (config) => {
         // 在发送请求之前添加 token 等信息
         if (typeof window !== 'undefined') {
-            const token = localStorage.getItem('admintoken'); // 假设 token 存储在 localStorage
-            config.headers.ADMINTOKEN = token || '';
+            let token = localStorage.getItem('admintoken'); // 假设 token 存储在 localStorage
+            
+            // 如果没有Token，设置默认值
+            if (!token) {
+                // 设置一个默认Token，这需要与后端用户匹配
+                token = "a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5p6";
+                console.log('未找到管理员Token，使用默认值');
+                localStorage.setItem('admintoken', token);
+            }
+            
+            config.headers.ADMINTOKEN = token;
         }
 
         return config;
