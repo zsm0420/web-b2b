@@ -15,8 +15,8 @@
     }
   ],
   "env": {
-    "NEXT_PUBLIC_TEMPLATE_ID": "@next_public_template_id",
-    "NEXT_PUBLIC_API_URL": "@next_public_api_url"
+    "NEXT_PUBLIC_TEMPLATE_ID": "001",
+    "NEXT_PUBLIC_API_URL": "http://127.0.0.1:8000"
   },
   "functions": {
     "app/api/**/*.js": {

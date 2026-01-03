@@ -1,6 +1,7 @@
 import Link from "next/link";
 import NavBarClient from "@/components/index/sections/template01/navBarClient";
 import Wechat from "@/components/index/sections/wechat";
+import {buildImageUrl} from "@/utils/imageHelper";
 
 
 export default function NavBar({sectionData}) {
@@ -111,7 +112,7 @@ export default function NavBar({sectionData}) {
                             <span className="sr-only">Logo</span>
                             <img
                                 alt="logo"
-                                src={`${process.env.NEXT_PUBLIC_BASE_URL}/upload/img/${sectionData.basicSite.site_logo}`}
+                                src={buildImageUrl(sectionData.basicSite?.site_logo)}
                                 className="h-12 w-auto"
                             />
                         </Link>

@@ -11,13 +11,16 @@ export default async function Home() {
         // 获取模板id
         const templateId = process.env.NEXT_PUBLIC_TEMPLATE_ID || '001';
         
-        // 准备传递给模板的props
+        // 准备传递给模板的props - 修复数据结构不匹配问题
         const templateProps = {
             bannerData: safeSectionData.bannerData || {},
+            featuredData: safeSectionData.productData || [], // 修复属性名不匹配
+            categoryData: safeSectionData.categoryData || [], // 添加分类数据
             aboutData: safeSectionData.aboutData || {},
-            productData: safeSectionData.productData || [],
-            newsData: safeSectionData.newsData || [],
-            caseData: safeSectionData.caseData || []
+            companyName: safeSectionData.companyName || 'Blueheart', // 添加公司名称
+            statsData: safeSectionData.statsData || {}, // 添加统计数据
+            commentData: safeSectionData.commentData || [], // 添加客户评论数据
+            newsData: safeSectionData.newsData || []
         };
         
         // 动态导入对应模板

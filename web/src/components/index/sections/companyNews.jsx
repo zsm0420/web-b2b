@@ -24,7 +24,7 @@ export default function CompanyNews({newsData}) {
                   >
                       <div className="absolute w-full h-full top-0 left-0 inset-0 -z-10 overflow-hidden">
                           <Image
-                              src={`${process.env.NEXT_PUBLIC_BASE_URL}/upload/img/${post.cover}`}
+                              src={buildImageUrl(post.cover)}
                               alt={post.title}
                               fill
                               sizes="(max-width: 768px) 100vw, (max-width: 1200px) 33vw, 33vw"

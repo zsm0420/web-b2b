@@ -83,7 +83,7 @@ export default function CaseList({pageNumber=1, total, caseData}) {
                             {/* 图片部分 */}
                             <div className="relative h-56 overflow-hidden">
                                 <Image
-                                    src={`${process.env.NEXT_PUBLIC_BASE_URL}/upload/img/${caseItem.cover}`}
+                                    src={buildImageUrl(caseItem.cover)}
                                     alt={caseItem.title}
                                     fill
                                     sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"

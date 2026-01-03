@@ -7,7 +7,7 @@ export default function ContactUs({contactData}) {
             {/* 背景图片 */}
             <div className="absolute w-full h-full top-0 left-0 inset-0">
                 <Image
-                    src={`${process.env.NEXT_PUBLIC_BASE_URL}/upload/img/${contactData}`}
+                    src={buildImageUrl(contactData)}
                     alt="contact us"
                     fill
                     sizes="100vw"

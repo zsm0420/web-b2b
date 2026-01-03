@@ -2,6 +2,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import lang from "@/locales";
+import {buildImageUrl} from "@/utils/imageHelper";
 
 export default function AboutUs({aboutData, companyName, statsData}) {
     return (
@@ -19,7 +20,7 @@ export default function AboutUs({aboutData, companyName, statsData}) {
                     <div className="relative h-[300px] lg:h-full overflow-hidden">
                         {aboutData?.aboutCover && (
                             <Image
-                                src={`${process.env.NEXT_PUBLIC_BASE_URL}/upload/img/${aboutData.aboutCover}`}
+                                src={buildImageUrl(aboutData.aboutCover)}
                                 alt={companyName || ''}
                                 fill
                                 className="object-cover"

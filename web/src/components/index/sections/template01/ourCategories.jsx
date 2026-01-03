@@ -2,6 +2,7 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import lang from "@/locales";
+import {buildImageUrl} from "@/utils/imageHelper";
 
 // 模拟分类数据 - 减少到4个
 const categories = [
@@ -34,7 +35,7 @@ function CategoryCard({ category }) {
             <div className="relative overflow-hidden mb-3" style={{ paddingBottom: '100%' }}>
                 <div className="absolute w-full h-full top-0 left-0">
                     <Image
-                        src={`${process.env.NEXT_PUBLIC_BASE_URL}/upload/img/${category.cover}`}
+                        src={buildImageUrl(category.cover)}
                         alt={category.title}
                         fill
                         className="object-cover transition-transform duration-500 group-hover:scale-110"

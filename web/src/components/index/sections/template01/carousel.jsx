@@ -7,16 +7,13 @@ import "swiper/css/navigation";
 import "swiper/css/pagination";
 import "swiper/css/effect-fade";
 import {Navigation, Autoplay, Pagination, EffectFade} from "swiper/modules";
+import {processBannerData} from "@/utils/imageHelper";
 
 
 const Carousel = ({bannerData}) => {
 
-    // 安全处理bannerData，确保是字符串类型
-    const bannerStr = typeof bannerData === 'string' ? bannerData : 
-                      typeof bannerData === 'object' && bannerData !== null ? 
-                      JSON.stringify(bannerData) : '';
-    
-    const coverArr = bannerStr ? bannerStr.split('#').filter(item => item.trim()) : [];
+    // 使用安全的图片处理函数
+    const coverArr = processBannerData(bannerData);
 
     const colorValue = "bg-black/20 hover:bg-black/50 text-white hover:text-white border border-white/30 backdrop-blur-sm";
     return (
@@ -48,7 +45,7 @@ const Carousel = ({bannerData}) => {
                     <SwiperSlide key={index}>
                         <div className="relative w-full h-full">
                             <Image
-                                src={`${process.env.NEXT_PUBLIC_BASE_URL}/upload/img/${image}`}
+                                src={image}
                                 alt="Hero Section"
                                 fill
                                 sizes="100vw"
