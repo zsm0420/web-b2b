@@ -1,6 +1,5 @@
 import api from "@/utils/axiosApi";
-import {cache} from "react";
-import {getIp} from "@/utils/tools";
+import { getSectionDataCached } from '../utils';
 
 // 为静态导出生成参数
 export async function generateStaticParams() {
@@ -99,21 +98,3 @@ function getPageNumber(slug) {
     return 1;
 }
 
-const getSectionDataCached = cache(async (params) => {
-    try {
-        const headers = {
-            'Content-Type': 'application/json',
-            'x-forwarded-for': getIp()
-        };
-        const {code, msg, data} = await api.get('/myapp/index/case/section', {headers, params});
-        if (code === 0) {
-            return data;
-        } else {
-            console.error(`获取数据错误: ${msg}`);
-            return null;
-        }
-    } catch (err) {
-        console.error("获取数据失败:", err);
-        return null;
-    }
-});
