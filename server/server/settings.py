@@ -220,6 +220,19 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # 跨域配置
 CORS_ALLOW_CREDENTIALS = False
 CORS_ORIGIN_ALLOW_ALL = True  # 允许所有域名访问，开发环境使用
+CORS_ALLOWED_HEADERS = [
+    'accept',
+    'accept-encoding',
+    'authorization',
+    'content-type',
+    'dnt',
+    'origin',
+    'user-agent',
+    'x-csrftoken',
+    'x-requested-with',
+    'admintoken',  # 添加自定义头部（小写）
+    'ADMINTOKEN',  # 添加自定义头部（大写）
+]
 
 
 # django上传文件限制 (内存阈值)

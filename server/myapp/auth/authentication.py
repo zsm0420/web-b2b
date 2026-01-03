@@ -8,8 +8,16 @@ from myapp.models import User
 # 后台接口认证
 class AdminTokenAuthtication(BaseAuthentication):
     def authenticate(self, request):
+        # 尝试获取admintoken头部
         adminToken = request.META.get("HTTP_ADMINTOKEN")
-
+        
+        # 如果没有找到，尝试从其他可能的格式获取
+        if not adminToken:
+            adminToken = request.META.get("HTTP_ADMİNTOKEN")  # Unicode变体
+            if not adminToken:
+                adminToken = request.META.get("HTTP_X_ADMINTOKEN")  # X-前缀变体
+        
+        # 如果还是没有，使用默认值
         if not adminToken:
             adminToken = "0000000000"
 
