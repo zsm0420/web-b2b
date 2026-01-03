@@ -23,7 +23,7 @@ from server import settings
 
 def redirect_to_frontend(request):
     """重定向到前端网站"""
-    return HttpResponseRedirect('https://web-fjzll71iq-mos-projects-e998b3b8.vercel.app')
+    return HttpResponseRedirect('https://web-bz7o5cgn6-mos-projects-e998b3b8.vercel.app')
 
 urlpatterns = [
     path('', redirect_to_frontend),  # 根路径重定向到前端
