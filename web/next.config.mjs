@@ -1,19 +1,25 @@
 /** @type {import('next').NextConfig} */
 
 const nextConfig = {
-    // 移除静态导出，启用动态渲染
-    // output: 'export', // 注释掉静态导出
-    trailingSlash: true, // 添加尾斜杠
+    // 启用服务器端渲染
+    output: 'standalone',
+    trailingSlash: true,
     images: {
-        unoptimized: true, // 静态导出需要禁用图片优化
+        unoptimized: false, // 动态渲染不需要禁用图片优化
         domains: [],
     },
     env: {
         NEXT_PUBLIC_TEMPLATE_ID: process.env.NEXT_PUBLIC_TEMPLATE_ID || '001',
         NEXT_PUBLIC_API_URL: process.env.NEXT_PUBLIC_API_URL || 'http://127.0.0.1:8000',
+        NEXT_PUBLIC_BASE_URL: process.env.NEXT_PUBLIC_BASE_URL || '',
     },
     eslint: {
         ignoreDuringBuilds: true,
+    },
+    experimental: {
+        serverActions: {
+            allowedOrigins: ['*'],
+        },
     },
 };
 

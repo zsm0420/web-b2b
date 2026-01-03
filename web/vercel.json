@@ -4,9 +4,23 @@
   "installCommand": "npm install",
   "cleanUrls": true,
   "trailingSlash": true,
-  "rewrites": [{"source": "/api/(.*)", "destination": "/api/$1"}],
+  "rewrites": [
+    {
+      "source": "/api/(.*)",
+      "destination": "/api/$1"
+    },
+    {
+      "source": "/(.*)",
+      "destination": "/"
+    }
+  ],
   "env": {
     "NEXT_PUBLIC_TEMPLATE_ID": "@next_public_template_id",
     "NEXT_PUBLIC_API_URL": "@next_public_api_url"
+  },
+  "functions": {
+    "app/api/**/*.js": {
+      "maxDuration": 30
+    }
   }
 }
