@@ -176,6 +176,42 @@ MEDIA_URL = '/upload/'
 
 STATIC_URL = 'static/'
 
+# 静态文件存储配置
+if os.environ.get('USE_S3') == 'true':
+    # 使用AWS S3存储
+    AWS_ACCESS_KEY_ID = os.environ.get('AWS_ACCESS_KEY_ID', '')
+    AWS_SECRET_ACCESS_KEY = os.environ.get('AWS_SECRET_ACCESS_KEY', '')
+    AWS_STORAGE_BUCKET_NAME = os.environ.get('AWS_STORAGE_BUCKET_NAME', '')
+    AWS_S3_REGION_NAME = os.environ.get('AWS_S3_REGION_NAME', '')
+    AWS_S3_ENDPOINT_URL = os.environ.get('AWS_S3_ENDPOINT_URL', 'https://s3.amazonaws.com')
+    AWS_DEFAULT_ACL = None
+    AWS_S3_OBJECT_PARAMETERS = {'CacheControl': 'max-age=86400'}
+    
+    # 静态文件存储
+    STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+    AWS_S3_BUCKET_NAME = AWS_STORAGE_BUCKET_NAME
+    AWS_S3_BUCKET_REGION = AWS_S3_REGION_NAME
+    
+    # 媒体文件存储
+    DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+    
+    # 媒体文件和静态文件的URL
+    MEDIA_URL = f'https://{AWS_STORAGE_BUCKET_NAME}.{AWS_S3_REGION_NAME}.amazonaws.com/media/'
+    STATIC_URL = f'https://{AWS_STORAGE_BUCKET_NAME}.{AWS_S3_REGION_NAME}.amazonaws.com/static/'
+else:
+    # 使用本地存储（仅开发环境）
+    if DEBUG:
+        STATICFILES_DIRS = [
+            os.path.join(BASE_DIR, 'static'),
+        ]
+    else:
+        # 生产环境部署时，使用Render提供的静态文件存储
+        STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+    
+    # 媒体文件URL配置
+    MEDIA_URL = '/media/'
+    # MEDIA_ROOT 在文件顶部已经定义
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
