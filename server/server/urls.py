@@ -16,10 +16,17 @@ Including another URLconf
 from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path, include
+from django.http import HttpResponseRedirect
+from django.urls import reverse
 
 from server import settings
 
+def redirect_to_frontend(request):
+    """重定向到前端网站"""
+    return HttpResponseRedirect('https://web-fjzll71iq-mos-projects-e998b3b8.vercel.app')
+
 urlpatterns = [
+    path('', redirect_to_frontend),  # 根路径重定向到前端
     path('admin/', admin.site.urls),
     path('myapp/', include('myapp.urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
