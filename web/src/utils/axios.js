@@ -24,7 +24,8 @@ axiosInstance.interceptors.request.use(
                 localStorage.setItem('admintoken', token);
             }
             
-            config.headers.ADMINTOKEN = token;
+            // 使用Authorization头部而不是ADMINTOKEN，兼容性更好
+            config.headers['Authorization'] = `Bearer ${token}`;
         }
 
         return config;
