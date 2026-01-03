@@ -3,6 +3,7 @@ import {Button, Input, message, Spin} from "antd";
 import axiosInstance from "@/utils/axios";
 import {useRouter} from "next/navigation";
 import { UserOutlined } from '@ant-design/icons';
+import { setDefaultAdminToken } from "@/utils/defaultAdminToken";
 
 const LoginPage = () => {
     const router = useRouter();
@@ -19,6 +20,9 @@ const LoginPage = () => {
     useEffect(() => {
         setYear(new Date().getFullYear());
         getInfo();
+        
+        // 设置默认管理员Token
+        setDefaultAdminToken();
         
         // 检查当前域名
         if (typeof window !== 'undefined') {
